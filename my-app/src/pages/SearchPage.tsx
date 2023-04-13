@@ -5,6 +5,7 @@ import { Button } from '@mui/material';
 import { Container, InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import 'typeface-roboto';
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme({
   typography: {
@@ -21,11 +22,23 @@ const darkTheme = createTheme({
   },
 });
 
-const SearchPage: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+interface Props {
+  queryString?: string;
+}
+
+const SearchPage: React.FC <Props> = ({queryString}) => {
+  const [searchTerm, setSearchTerm] = useState(queryString!);
+  const navigate = useNavigate();
+
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      navigate(`/results/${searchTerm}`);
+    }
   };
 
   const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -47,6 +60,7 @@ const SearchPage: React.FC = () => {
           id="outlined-basic"
           type="search"
           value={searchTerm}
+          onKeyDown={handleKeyDown}
           onChange={handleChange}
           sx={{
             width: 600,

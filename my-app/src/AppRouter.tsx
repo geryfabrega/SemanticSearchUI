@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/mainPage/MainPage';
+import SearchResults from './pages/searchResults/SearchResults';
 
 const getSubdomain = (): string | null => {
     const hostname = window.location.hostname;
@@ -17,6 +18,7 @@ const AppRouter: React.FC = () => {
         <Router>
             <Routes>
                 <Route path="/" Component={HomePage} />
+                <Route path="/results/:query" Component={SearchResults}/>
             </Routes>
         </Router>
     );
