@@ -24,9 +24,10 @@ const darkTheme = createTheme({
 
 interface Props {
   queryString?: string;
+  resultMode?: boolean;
 }
 
-const SearchPage: React.FC <Props> = ({queryString}) => {
+const SearchPage: React.FC <Props> = ({queryString,resultMode}) => {
   const [searchTerm, setSearchTerm] = useState(queryString!);
   const navigate = useNavigate();
 
@@ -48,13 +49,15 @@ const SearchPage: React.FC <Props> = ({queryString}) => {
   return (
     <div>
       <ThemeProvider theme={darkTheme}>
+      {!resultMode && (
           <Typography
             variant="h3"
             align="center"
             style={{ fontWeight: 'bold', fontFamily: 'roboto' }}
           >
-          Semantic Search
-        </Typography>
+            Semantic Search
+          </Typography>
+        )}
       <Container maxWidth="md" sx={{ mt: 5 }}>
         <TextField
           id="outlined-basic"

@@ -9,10 +9,12 @@ import Box from '@mui/material/Box';
 import { RoundedCorner } from '@mui/icons-material';
 import {useState} from "react";
 import PopUpMessage from "../../components/PopUpMessage";
+import { useParams } from 'react-router-dom';
+import { Divider } from '@mui/material';
+import ResultsBoxes from '../../components/ResultBoxes';
 
-function MainPage() {
+function SearchResults() {
     const particlesInit = useCallback(async (engine: Engine) => {
-      console.log(engine);
 
       // you can initialize the tsParticles instance (engine) here, adding custom shapes or presets
       // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
@@ -20,6 +22,7 @@ function MainPage() {
       await loadFull(engine);
   }, []);
     const [messageOn,setMessage] = useState(true);
+    const { query } = useParams<{ query: string }>();
 
   const particlesLoaded = useCallback(async (container: Container | undefined) => {
       await console.log(container);
@@ -112,12 +115,17 @@ function MainPage() {
                 detectRetina: true,
             }}
         />
-        <SearchPage/>
-        <PopUpMessage/>
-        <img className={'image'}src={image} alt="US ARMY 18th AirBorne Corps" width={250} height={250}/>
+        <div className="glass-container">
+        <div className="glass-object"></div>
+        </div>
+        <div className="text-layer">
+            <SearchPage queryString={query} resultMode={true}/>
+            <Divider id="test-divider" className={'custom-divider'}/>
+            <ResultsBoxes/>
+        </div>
       </header>
     </div>
   );
 }
 
-export default MainPage;
+export default SearchResults;
